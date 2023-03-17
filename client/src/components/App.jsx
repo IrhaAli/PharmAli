@@ -25,9 +25,12 @@ function App() {
   const [menu, setMenu] = useState(false);
   const [page, setPage] = useState(HOME);
 
+  const setThePage = (page) => setPage(page);
+  const setTheMenu = () => setMenu((prev) => !prev);
+
   return (
     <div className="App">
-      <Navbar menu={menu} setMenu={setMenu} setPage={setPage}/>
+      <Navbar menu={menu} setMenu={setTheMenu} setPage={setThePage} />
       {page === HOME &&
         (<Home />)}
       {page === LOGIN_SIGNUP &&
