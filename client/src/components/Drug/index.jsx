@@ -20,13 +20,6 @@ const Drug = (props) => {
         return axios.get(`https://api.fda.gov/drug/label.json?search=description:${drug.name}`)
       })
       .then((data) => {
-        console.log(data.data.results[0].description[0],
-          data.data.results[0].drug_interactions[0],
-          data.data.results[0].dosage_and_administration[0],
-          data.data.results[0].adverse_reactions[0],
-          data.data.results[0].contraindications[0],
-          data.data.results[0].information_for_patients[0],
-          data.data.results[0].overdosage[0]);
         setContent([data.data.results[0].description[0],
         data.data.results[0].drug_interactions[0],
         data.data.results[0].dosage_and_administration[0],
