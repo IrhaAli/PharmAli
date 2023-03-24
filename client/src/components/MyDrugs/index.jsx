@@ -6,21 +6,20 @@ import DrugListItem from "../MyDrugItem";
 
 const MyDrugs = (props) => {
   const navigate = useNavigate();
-  // const [drugs, setDrugs] = useState([]);
-
+  
   useEffect(() => {
     if (props.user) {
       Promise.all([
         axios.get(`/favourite/${props.user}`),
       ]).then((data) => {
-        props.setDrugs(data[0].data)
+        props.setSavedDrugs(data[0].data)
       })
     }
   }, [props.user]);
 
   return (
     <>
-      {props.drugs.map((drug) => (
+      {props.savedDrugs.map((drug) => (
         <DrugListItem
           key={drug.drug_id}
           drug={drug}

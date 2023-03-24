@@ -16,10 +16,11 @@ const Drug = (props) => {
   const location = useLocation();
   const navigate = useNavigate();
   const drugName = location.pathname.split("/")[2];
+
+
   // First time page is visited
   useEffect(() => {
     const drugName = location.pathname.split("/")[2];
-    console.log(drugName);
     axios
       .get(`https://api.fda.gov/drug/label.json?search=description:${drugName}`)
       .then((data) => {
@@ -63,18 +64,21 @@ const Drug = (props) => {
 
   // First time page is visited
   useEffect(() => {
-    const drugName = location.pathname.split("/")[2];
+    const drugName = props.savedDrugs.find((drug) => drug.name === drugName).id;
     if (props.user) {
-      // axios.get(`/favourite/${props.user}&${drugName}`)
-      //   .then((data) => {
-      //     (data.data.length === 0) ? setFavourite("") : setFavourite(data.data[0].id);
-      //   })
+      axios.get(`/favourite/${props.user}&${drugName}`).then((data) => {
+        console.log(data)
+        data.data.length === 0
+          ? setFavourite("")
+          : setFavourite(data.data[0].id);
+      });
     }
   }, [props.user]);
 
   // Every time drug is favourited
   const changeLike = () => {
-    const drugId = location.pathname.split("/")[2];
+    const drugId = props.savedDrugs.find((drug) => drug.name === drugName).id;
+    console.log(props.savedDrugs)
     let params;
     let route;
     if (favourite) {
@@ -93,18 +97,18 @@ const Drug = (props) => {
     <>
       <div className="image-container">
         <div className="image1">
-        <Link to="/mydrugs">
-          <img className="drug-image" src={medlist} />
-        </Link>
-        <Link to="/pharma">
-          <img className="drug-image" src={locator} />
-        </Link>
-        <Link to="/blogs">
-          <img className="drug-image" src={blogs} />
-        </Link>
-        <Link to="/myjournal">
-          <img className="drug-image" src={journal} />
-        </Link>
+          <Link to="/mydrugs">
+            <img className="drug-image" src={medlist} />
+          </Link>
+          <Link to="/pharma">
+            <img className="drug-image" src={locator} />
+          </Link>
+          <Link to="/blogs">
+            <img className="drug-image" src={blogs} />
+          </Link>
+          <Link to="/myjournal">
+            <img className="drug-image" src={journal} />
+          </Link>
         </div>
       </div>
 
@@ -112,10 +116,16 @@ const Drug = (props) => {
         <ArrowBackIcon size="large" onClick={() => navigate("/search")} />
         <span className="drug-name">
           <h1>Drug Name: {drugName}</h1>
-          {!favourite && (
-            <div onClick={changeLike}>Click me to favourite this drug</div>
+          {props.user && (
+            <>
+              {!favourite && (
+                <div onClick={changeLike}>Click me to favourite this drug</div>
+              )}
+              {favourite && (
+                <div onClick={changeLike}>Click me to unfavourite</div>
+              )}
+            </>
           )}
-          {favourite && <div onClick={changeLike}>Click me to unfavourite</div>}
           <hr />
         </span>
         {Object.keys(content).map((data) => (
