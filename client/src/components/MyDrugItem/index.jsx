@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { BsHeartPulse } from "react-icons/bs";
 import "../../styles/Drug.css";
+import "../../styles/MyBlogs.css";
+
 
 const DrugListItem = (props) => {
   const navigate = useNavigate();
@@ -21,6 +23,12 @@ const DrugListItem = (props) => {
     });
   };
 
+  const sendText = () => {
+    Promise.all([
+      axios.get(`send-text?recipient=${'+16474604614'}&textmessage=${props.drug.notes}`)
+    ]).catch(err => console.error(err))
+  }
+
   return (
     <div className="mydrugcontainer">
       <div className="mymedlist">
@@ -38,6 +46,8 @@ const DrugListItem = (props) => {
               <div className="unfavtext">Click me to unfavourite</div>
             </div>
             <div class="notes">{props.drug.notes}</div>
+            {props.drug.notes &&
+            (<button className="blog-button" onClick={sendText}>Text me these notes</button>)}
           </>
         )}
       </div>
