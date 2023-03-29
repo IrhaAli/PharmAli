@@ -38,7 +38,10 @@ function CommentList(props) {
 
   // To add a comment
   const addComment = () => {
-    const params = { user_id: props.user, comment: newComment, blog_id: props.blog_id, name: props.userInfo.name }
+    const date = new Date()
+    console.log(`${date.toISOString().split('T')[0]} ${date.toString().split(' ')[4]}`)
+    console.log(date.toISOString())
+    const params = { user_id: props.user, comment: newComment, blog_id: props.blog_id, name: props.userInfo.name, created_at: `${date.toISOString().split('T')[0]} ${date.toString().split(' ')[4]}` }
     Promise.all([
       axios.post(`/comments/add`, params),
     ])
@@ -58,15 +61,15 @@ function CommentList(props) {
   }
 
   useEffect(() => {
-      props.websocket.onmessage = (event) => {
-        const commentInfo = JSON.parse(event.data)
-        if (commentInfo.type === 'COMMENT') {
-          if (commentInfo.add) {
-            setComments(prev => (prev.find(comment => comment.id === commentInfo.comment.id)) ? prev : [...prev, commentInfo.comment])
-          } else {
-            setComments(prev => prev.filter(comment => comment.id != commentInfo.comment))
-          }
+    props.websocket.onmessage = (event) => {
+      const commentInfo = JSON.parse(event.data)
+      if (commentInfo.type === 'COMMENT') {
+        if (commentInfo.add) {
+          setComments(prev => (prev.find(comment => comment.id === commentInfo.comment.id)) ? prev : [...prev, commentInfo.comment])
+        } else {
+          setComments(prev => prev.filter(comment => comment.id != commentInfo.comment))
         }
+      }
     }
   }, []);
 

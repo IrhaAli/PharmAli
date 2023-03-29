@@ -6,6 +6,7 @@ module.exports = (db, updateComment) => {
   router.get("/:id", (request, response) => {
     getComments(db, request.url.split("/")[1])
       .then(({ rows: comments }) => {
+        console.log(comments)
         response.send(comments);
       })
   });
@@ -13,8 +14,11 @@ module.exports = (db, updateComment) => {
   // Add a comment to the blog
   router.post("/add", (req, res) => {
     // Validate comment
-    const { user_id, comment, blog_id, name } = req.body;
-    const commentInfo = { user_id, comment, blog_id };
+    const { user_id, comment, blog_id, name, created_at } = req.body;
+    const commentInfo = { user_id, comment, blog_id, created_at };
+    // 2023-02-27T05:00:00.000Z
+    // Tue Mar 28 2023 11:59:59 GMT-0400 (Eastern Daylight Time)
+  console.log('----------',created_at)
     let status = 400
     if (!comment) {
       return res.status(status).send("Please include some text in the comment.")

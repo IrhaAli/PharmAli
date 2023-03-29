@@ -4,7 +4,7 @@ import CommentList from '../CommentList'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import axios from 'axios'
 import { useNavigate, useLocation } from "react-router-dom";
-import TimeAgo from 'timeago-react';
+import TimeAgo from 'react-timeago'
 
 
 function BlogPost(props) {
@@ -53,7 +53,7 @@ function BlogPost(props) {
               {blogContent.name}
             </b>
           </span>
-          <span><TimeAgo datetime={blogContent.created_at} /></span>
+          <span><TimeAgo date={blogContent.created_at} /></span>
         </div>
         <p className="blogPostText">
           {blogContent.content}

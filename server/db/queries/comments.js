@@ -7,10 +7,10 @@ const getComments = function(db, blog_id) {
 };
 
 const addComment = function(db, comment) {
-  const queryParams = [comment.user_id, comment.comment, comment.blog_id];
+  const queryParams = [comment.user_id, comment.comment, comment.blog_id, comment.created_at];
   const queryString = `
-  INSERT INTO comments (user_id, comment, blog_id)
-  VALUES  ($1, $2, $3) RETURNING *`
+  INSERT INTO comments (user_id, comment, blog_id, created_at)
+  VALUES  ($1, $2, $3, $4) RETURNING *`
   return db.query(queryString, queryParams);
 
 };

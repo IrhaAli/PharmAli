@@ -1,6 +1,6 @@
 import React from 'react'
 import "../../styles/BlogPostItem.css";
-import TimeAgo from 'timeago-react';
+import TimeAgo from 'react-timeago'
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import { MdDeleteForever } from 'react-icons/md';
@@ -23,7 +23,7 @@ function BlogPostListItem(props) {
           {props.blog.title}
         </span>
         <hr />
-        <span className="blogDate"><TimeAgo datetime={props.blog.created_at} /></span>
+        <span className="blogDate"><TimeAgo date={props.blog.created_at} /></span>
       </div>
       <p className="blogDescription">
         {props.blog.content}
