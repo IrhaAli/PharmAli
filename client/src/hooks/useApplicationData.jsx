@@ -23,6 +23,10 @@ export default function useApplicationData() {
     return axios.post("/user/logout")
   };
 
-  return { user, setUser, userInfo, setUserInfo, allBlogs, setAllBlogs, drugs, setDrugs, setCookie, removeCookie };
+  const getCookie = () => {
+    return axios.get("/user")
+  }
+
+  return { user, setUser, userInfo, setUserInfo, allBlogs, setAllBlogs, drugs, setDrugs, setCookie, removeCookie, getCookie };
 
 }
