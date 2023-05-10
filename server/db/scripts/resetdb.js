@@ -1,19 +1,18 @@
 // Create a connection to the db
-require("dotenv").config();
 const { Client } = require('pg');
 const SCHEMA_PATH = './db/schema';
 const SEEDS_PATH = './db/seeds';
 const drugs = require('./drug-names');
 
-const { DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT } = process.env;
+const { PGHOST, PGUSER, PGPASSWORD, PGDATABASE, PGPORT } = process.env;
 const fs = require("fs").promises;
 
 const connObj = {
-	user: DB_USER,
-	host: DB_HOST,
-	password: DB_PASS,
-	port: DB_PORT,
-	database: DB_NAME,
+	user: PGUSER,
+	host: PGHOST,
+	password: PGPASSWORD,
+	port: PGPORT,
+	database: PGDATABASE,
 }
 
 // To add drug names seeds
@@ -88,5 +87,4 @@ const resetDB = async () => {
 	}
 }
 
-// Reset the db
-resetDB();
+module.exports = { resetDB };
