@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/PharmAli/client/static/css/main.a6ba663a.css",
+    "main.js": "/PharmAli/client/static/js/main.76f45f62.js",
+    "static/media/search.png": "/PharmAli/client/static/media/search.122b9a694a4caf36d06c.png",
+    "static/media/locator.png": "/PharmAli/client/static/media/locator.e86c632d2df5be8a4a80.png",
+    "static/media/family.png": "/PharmAli/client/static/media/family.04b4da6fa195336ef729.png",
+    "static/media/journal.png": "/PharmAli/client/static/media/journal.3a1ca73e659d7b04aa44.png",
+    "static/media/medlist.png": "/PharmAli/client/static/media/medlist.135977234fe184e69093.png",
+    "static/media/blogs.png": "/PharmAli/client/static/media/blogs.50c6f9dedf8ae3f0d256.png",
+    "static/media/logo.png": "/PharmAli/client/static/media/logo.8f303f339ea3270471ac.png",
+    "index.html": "/PharmAli/client/index.html",
+    "main.a6ba663a.css.map": "/PharmAli/client/static/css/main.a6ba663a.css.map",
+    "main.76f45f62.js.map": "/PharmAli/client/static/js/main.76f45f62.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a6ba663a.css",
+    "static/js/main.76f45f62.js"
+  ]
+}
