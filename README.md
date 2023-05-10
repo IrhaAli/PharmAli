@@ -55,11 +55,11 @@ A full stack web application built with React and Express that allows user to se
   - Fill in the necessary PostgreSQL configuration
     - (  eg. 
       PORT=8080
-      DB_HOST=localhost
-      DB_USER=labber
-      DB_PASSWORD=labber
-      DB_DATABASE=pharmali
-      DB_PORT=5432
+      PGHOST=localhost
+      PGUSER=labber
+      PGPASSWORD=labber
+      PGDATABASE=pharmali
+      PGPORT=5432
       )
     - Go into psql
     - Create a db ( CREATE DATABASE pharmali; )
@@ -71,3 +71,20 @@ A full stack web application built with React and Express that allows user to se
 6. Visit `http://localhost:8080` for the server and `http://localhost:3000` for the client.
 
 [Our Planning](https://docs.google.com/document/d/1U8eNGZD_s1pxMBGhaHakMUgmOXnHBa7SInt2FYvRPeY/edit?usp=sharing)
+
+## Development Setup
+
+- Make sure you have Docker installed.
+- Create `./server/.env` with the following:
+
+```
+PGHOST=localhost
+PGUSER=labber
+PGPASSWORD=labber
+PGDATABASE=pharmali
+PGPORT=5432
+NODE_ENV=development
+```
+
+- Run `npm run dev:start`
+- Visit http://localhost:8080
