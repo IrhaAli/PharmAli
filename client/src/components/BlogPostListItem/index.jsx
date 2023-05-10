@@ -1,5 +1,5 @@
 import React from 'react'
-import TimeAgo from 'timeago-react';
+import TimeAgo from 'react-timeago';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import { MdDeleteForever } from 'react-icons/md';
@@ -23,7 +23,7 @@ function BlogPostListItem({ blog, setBlog, user, editPost, deletePost }) {
           {blog.title}
         </span>
         <hr />
-        <span className="blogDate"><TimeAgo datetime={blog.created_at} /></span>
+        <span className="blogDate"><TimeAgo date={blog.created_at} /></span>
       </div>
       <p className="blogDescription">
         {blog.content}
@@ -31,7 +31,7 @@ function BlogPostListItem({ blog, setBlog, user, editPost, deletePost }) {
       <div className='btn-pink-container'>
         <button className="btn-pink" onClick={setBlog}> Read Blog </button>
 
-        {user == blog.user_id && (
+        {user === blog.user_id && (
           <div className='edit-icon-container'>
             <IconButton onClick={editPost}>
               <EditIcon className='edit-icon' fontSize='large' />

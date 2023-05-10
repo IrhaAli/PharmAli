@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../../axiosInstance';
 import Error from "../Error";
 import { useNavigate, useLocation } from "react-router-dom";
 import SelectSmall from '../Category/index.jsx';
@@ -34,7 +34,7 @@ function SaveBlog({ user, allBlogs, setAllBlogs }) {
       axios.get('/categories')
     ]).then((data) => {
       if (!isNaN(blogId)) {
-        const blog = allBlogs.find(blog => blog.id == blogId);
+        const blog = allBlogs.find(blog => blog.id === blogId);
         setTitle(blog.title);
         setImage(blog.image_url);
         setContent(blog.content);
@@ -42,7 +42,7 @@ function SaveBlog({ user, allBlogs, setAllBlogs }) {
       }
       setCategories(data[0].data);
     })
-  }, [allBlogs]);
+  }, [allBlogs, blogId]);
 
   // Everytime title, image or content is changed update state(s)
   const titleChange = (e) => setTitle(e.target.value);

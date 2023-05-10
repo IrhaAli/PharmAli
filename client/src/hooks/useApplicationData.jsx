@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../axiosInstance";
 import { useState } from 'react';
 
 export default function useApplicationData() {
@@ -23,10 +23,6 @@ export default function useApplicationData() {
     return axios.post("/user/logout")
   };
 
-  const getCookie = () => {
-    return axios.get("/user")
-  }
-
-  return { user, setUser, userInfo, setUserInfo, allBlogs, setAllBlogs, drugs, setDrugs, setCookie, removeCookie, getCookie };
+  return { user, setUser, userInfo, setUserInfo, allBlogs, setAllBlogs, drugs, setDrugs, setCookie, removeCookie };
 
 }

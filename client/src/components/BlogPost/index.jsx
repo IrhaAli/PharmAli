@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useNavigate, useLocation } from "react-router-dom";
 import CommentList from '../CommentList'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import TimeAgo from 'timeago-react';
+import TimeAgo from 'react-timeago';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "../../styles/BlogPost.css"
 
-function BlogPost({ allBlogs, user, userInfo, /*websocket*/ }) {
+function BlogPost({ allBlogs, user, userInfo, websocket }) {
   // Set initial state of the content displayed for this component
   const navigate = useNavigate();
   const location = useLocation();
@@ -17,7 +16,7 @@ function BlogPost({ allBlogs, user, userInfo, /*websocket*/ }) {
 
   // Get blog content from allBlogs
   useEffect(() => {
-    const updatedBlog = allBlogs.find(blog => blog.id == blogId);
+    const updatedBlog = allBlogs.find(blog => blog.id === blogId);
     if (updatedBlog) {
       setBlogContent(prev => {
         return { ...updatedBlog, name: prev.name }
@@ -26,7 +25,7 @@ function BlogPost({ allBlogs, user, userInfo, /*websocket*/ }) {
     if (!updatedBlog && allBlogs.length !== 0) {
       navigate('/*')
     }
-  }, [allBlogs]);
+  }, [allBlogs, blogId, navigate]);
 
   // Add toaster notifications
   const addNotification = (name) => toast(`Comment Added by ${name}`);
@@ -52,7 +51,7 @@ function BlogPost({ allBlogs, user, userInfo, /*websocket*/ }) {
               {blogContent.name}
             </b>
           </span>
-          <span><TimeAgo datetime={blogContent.created_at} /></span>
+          <span><TimeAgo date={blogContent.created_at} /></span>
         </div>
         <p className="blogPostText">
           {blogContent.content}
@@ -62,7 +61,7 @@ function BlogPost({ allBlogs, user, userInfo, /*websocket*/ }) {
           blog_id={blogId}
           user={user}
           userInfo={userInfo}
-          // websocket={websocket}
+          websocket={websocket}
           addNotification={addNotification}
           deleteNotification={deleteNotification} />
       </div>

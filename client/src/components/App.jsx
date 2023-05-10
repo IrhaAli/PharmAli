@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { UserProvider } from '../context/UserContext';
 import { useEffect } from 'react';
-import axios from 'axios';
+import axios from '../axiosInstance';
 import Home from './Home';
 import Search from './Search';
 import PharmaLocator from './PharmLocator';
@@ -19,28 +19,29 @@ import '../styles/App.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const websocket = new WebSocket('ws://localhost:8080');
+
 function App() {
   // Gather all important helpers and states
-  // const websocket = new WebSocket('ws://localhost:8080');
-  const { user, setUser, userInfo, setUserInfo, allBlogs, setAllBlogs, drugs, setDrugs, setCookie, removeCookie, getCookie } = useApplicationData();
+  const { user, setUser, userInfo, setUserInfo, allBlogs, setAllBlogs, drugs, setDrugs, setCookie, removeCookie } = useApplicationData();
   const addNotification = (title) => toast(`${title} has been added in blogs`);
 
   // Update all blogs for realtime updates
-  // useEffect(() => {
-  //   websocket.onopen = () => {
-  //     websocket.onmessage = (event) => {
-  //       const blogs = JSON.parse(event.data);
-  //       if (blogs.type === 'BLOGS') {
-  //         setAllBlogs(blogs.blogs);
-  //         return (blogs.title) ? addNotification(blogs.title) : null;
-  //       }
-  //     };
-  //   };
-  // }, [websocket.onmessage]);
+  useEffect(() => {
+    websocket.onopen = () => {
+      websocket.onmessage = (event) => {
+        const blogs = JSON.parse(event.data);
+        if (blogs.type === 'BLOGS') {
+          setAllBlogs(blogs.blogs);
+          return (blogs.title) ? addNotification(blogs.title) : null;
+        }
+      };
+    };
+  }, [setAllBlogs]);
 
   // When app is refreshed
   useEffect(() => {
-    getCookie()
+    axios.get("/user")
       .then((data) => {
         setUser(data.data.id);
         setUserInfo(data.data);
@@ -49,7 +50,7 @@ function App() {
       .then((data) => {
         setAllBlogs(data.data);
       })
-  }, []);
+  }, [setAllBlogs, setUser, setUserInfo]);
 
   // To get all saved meds when user is logged in
   useEffect(() => {
@@ -60,7 +61,7 @@ function App() {
         setDrugs(data[0].data)
       })
     }
-  }, [user]);
+  }, [user, setDrugs]);
 
   // create context file to make api call to get cookie and get cookie from that (context provider)
   return (
@@ -75,7 +76,7 @@ function App() {
             <Route path="/search" element={<Search />} />
             <Route path="/register" element={<Register setUser={setUser} setUserInfo={setUserInfo} setCookie={setCookie} />} />
             <Route path="/login" element={<Login setUser={setUser} setUserInfo={setUserInfo} setCookie={setCookie} />} />
-            <Route path="/blogs/:id" element={<BlogPost user={user} userInfo={userInfo} /*websocket={websocket}*/ allBlogs={allBlogs} />} />
+            <Route path="/blogs/:id" element={<BlogPost user={user} userInfo={userInfo} websocket={websocket} allBlogs={allBlogs} />} />
             <Route path="/drugs/*" element={<Drug user={user} drugs={drugs} setDrugs={setDrugs} />} />
             <Route path="/pharma" element={<PharmaLocator user={user} />} />
             <Route path="/blogs" element={<BlogPostList user={user} allBlogs={allBlogs} setAllBlogs={setAllBlogs} />} />

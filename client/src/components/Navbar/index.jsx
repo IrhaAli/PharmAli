@@ -36,7 +36,7 @@ const Navbar = ({ user, userInfo, setUser, setUserInfo }) => {
   return (
     <nav className="navbar2">
       <span className="navbar__logo">
-        <img className="logo-image" src={logo} />
+        <img className="logo-image" src={logo} alt="" />
       </span>
       <span className="logo-title">PharmAli</span>
       {menuClicked ? (
@@ -61,10 +61,9 @@ const Navbar = ({ user, userInfo, setUser, setUserInfo }) => {
         {navbarData(user).map((item, index) => {
           return (
             <li className="navbar__item" key={index} onClick={() => setLink(item.url)}>
-              <a className="navbar__link">
-
+              <span className="navbar__link">
                 {item.title}
-              </a>
+              </span>
             </li>
           );
         })}
